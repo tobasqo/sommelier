@@ -1,0 +1,6 @@
+<a href="{% url 'bottle-detail' bottle.pk %}">
+    <strong>[{{ bottle.wine.producer }}] {{ bottle.wine.name }} ({{ bottle.year }})</strong><br>
+    {{ bottle.wine.kind }} | {{ bottle.wine.taste }}
+    | {{ bottle.wine.country }}<br>
+    Ocena: {{ bottle.score }}/10<br>
+</a>

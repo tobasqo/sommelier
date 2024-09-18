@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    {{ bottle.wine.name|default:"Dodaj butelkę" }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ object.wine.name|default:"Dodaj butelkę" }}</h1>
+{% endblock %}

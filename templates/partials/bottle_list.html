@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <a href="{% url 'wine-create' %}">Dodaj butelkę</a>
+
+    <ul>
+        {% for bottle in bottles %}
+            <li>
+                {% include 'partials/bottle_card.html' with bottle=bottle %}
+            </li>
+        {% empty %}
+            <li>Nie dodano żadnych butelek</li>
+        {% endfor %}
+    </ul>
+
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; 1</a>
+                    {% if page_obj.previous_page_number != 1 %}
+                        <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+                    {% endif %}
+                {% endif %}
+
+                <span class="current">{{ page_obj.number }}</span>
+
+                {% if page_obj.has_next %}
+                    {% if page_obj.next_page_number != page_obj.paginator.num_pages %}
+                        <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+                    {% endif %}
+                    <a href="?page={{ page_obj.paginator.num_pages }}">Ostatnia &raquo;</a>
+                {% endif %} 
+            </span>
+        </div>
+    {% endif %}
+{% endblock %}

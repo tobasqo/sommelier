@@ -1,0 +1,6 @@
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="hidden" name="wine-id" value="{{ wine.id|default:'' }}">
+    {{ form.as_p }}
+    <button type="submit">Zapisz</button>
+</form>
