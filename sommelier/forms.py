@@ -14,6 +14,9 @@ class BottleForm(forms.ModelForm):
     class Meta:
         model = models.Bottle
         fields = '__all__'
+        widgets = {
+            'description': forms.Textarea(attrs={'rows': 2}),
+        }
 
 
 class ShopInfoForm(forms.ModelForm):
