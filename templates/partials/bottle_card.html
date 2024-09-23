@@ -1,6 +1,25 @@
-<a href="{% url 'bottle-detail' bottle.pk %}">
-    <strong>[{{ bottle.wine.producer }}] {{ bottle.wine.name }} ({{ bottle.year }})</strong><br>
-    {{ bottle.wine.kind }} | {{ bottle.wine.taste }}
-    | {{ bottle.wine.country }}<br>
-    Ocena: {{ bottle.score }}/10<br>
-</a>
+{% load static %}
+
+<div class="flex border border-gray-200 rounded-lg shadow max-w-40">
+    <a href="{% url 'bottle-detail' bottle.pk %}">
+        <img
+            class="rounded-t-lg object-scale-down"
+            src="{% if bottle.image %}
+                    {% static bottle.image.url %}
+                {% else %}
+                    {% static 'images/default_img.svg' %}
+                {% endif %}"
+            alt="Brak zdjęcia do wyświetlenia"/>
+        <div class="p-2.5 content-between">
+            <h5 class="mb-1.5 text-base font-bold text-gray-900">
+                [{{ bottle.wine.producer }}] {{ bottle.wine.name }} ({{ bottle.year }})
+            </h5>
+            <p class="text-xs font-normal text-gray-500 leading-relaxed">
+                {{ bottle.wine.get_kind_display }}<br>
+                {{ bottle.wine.get_taste_display }}<br>
+                {{ bottle.wine.get_country_display }}<br>
+                Ocena: {{ bottle.score }}/10
+            </p>
+        </div>
+    </a>
+</div>

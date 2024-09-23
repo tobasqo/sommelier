@@ -3,16 +3,18 @@
 {% block body %}
     <a href="{% url 'wine-create' %}">Dodaj butelkę</a>
 
-    <ul>
+    {# TODO: move to bottom-right as floating button #}
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
         {% for bottle in bottles %}
-            <li>
-                {% include 'partials/bottle_card.html' with bottle=bottle %}
-            </li>
+            {% include 'partials/bottle_card.html' with bottle=bottle %}
         {% empty %}
-            <li>Nie dodano żadnych butelek</li>
+            <h3>Nie dodano żadnych butelek</h3>
         {% endfor %}
-    </ul>
+    </div>
+    
+    {# TODO: add search bar #}
 
+    {# TODO: improve pagination: https://flowbite.com/docs/components/pagination/ #}
     {% if is_paginated %}
         <div class="pagination">
             <span class="step-links">
