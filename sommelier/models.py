@@ -1,3 +1,6 @@
+import os
+
+from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
@@ -65,18 +68,21 @@ class Wine(models.Model):
     producer = models.CharField(max_length=100)
 
     def __str__(self):
-        return f'[{self.producer}] {self.name} ({self.kind}/{self.taste})'
+        return f'[{self.producer}] {self.name} ({self.get_kind_display()}/{self.get_taste_display()})'
+
+    class Meta:
+        ordering = ['-id']
 
 
-def save_to(instance: 'Bottle', filename: str):
-    ext = filename.rsplit('.', 1)[1]
-    return f"{instance.wine.name}_{instance.shop_info.date}.{ext}"
+def upload_to(instance: 'Bottle', filename: str):
+    ext = os.path.splitext(filename)[1]
+    return os.path.join(settings.MEDIA_ROOT, 'wines', str(instance.year), f'{instance.wine.name}{ext}')
 
 
 class Bottle(models.Model):
     wine = models.ForeignKey(Wine, on_delete=models.PROTECT)
     year = models.IntegerField(validators=[MinValueValidator(1900), MaxValueValidator(2100)])
-    image = models.ImageField(upload_to=save_to, blank=True)
+    image = models.ImageField(upload_to=upload_to, blank=True)
     score = models.DecimalField(
         max_digits=3,
         decimal_places=1,
@@ -87,6 +93,9 @@ class Bottle(models.Model):
     def __str__(self):
         return f"{self.wine} - {self.year}"
 
+    class Meta:
+        ordering = ['-id']
+
 
 class ShopInfo(models.Model):
     bottle = models.ForeignKey(Bottle, on_delete=models.PROTECT, related_name='shop_info')
@@ -96,3 +105,6 @@ class ShopInfo(models.Model):
 
     def __str__(self):
         return f"{self.shop_name} - {self.price}"
+
+    class Meta:
+        ordering = ['-id']

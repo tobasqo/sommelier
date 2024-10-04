@@ -1,39 +1,14 @@
 {% extends 'base.html' %}
 
 {% block body %}
-    <a href="{% url 'wine-create' %}">Dodaj butelkę</a>
-
-    {# TODO: move to bottom-right as floating button #}
-    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+    {# TODO: add search bar #}
+    <div class="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mx-auto">
         {% for bottle in bottles %}
             {% include 'partials/bottle_card.html' with bottle=bottle %}
         {% empty %}
-            <h3>Nie dodano żadnych butelek</h3>
+            <h3 class="text-center text-xl mx-auto my-auto">Nie dodano żadnych butelek</h3>
         {% endfor %}
     </div>
-    
-    {# TODO: add search bar #}
 
-    {# TODO: improve pagination: https://flowbite.com/docs/components/pagination/ #}
-    {% if is_paginated %}
-        <div class="pagination">
-            <span class="step-links">
-                {% if page_obj.has_previous %}
-                    <a href="?page=1">&laquo; 1</a>
-                    {% if page_obj.previous_page_number != 1 %}
-                        <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
-                    {% endif %}
-                {% endif %}
-
-                <span class="current">{{ page_obj.number }}</span>
-
-                {% if page_obj.has_next %}
-                    {% if page_obj.next_page_number != page_obj.paginator.num_pages %}
-                        <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
-                    {% endif %}
-                    <a href="?page={{ page_obj.paginator.num_pages }}">Ostatnia &raquo;</a>
-                {% endif %} 
-            </span>
-        </div>
-    {% endif %}
+    {% include 'partials/bottom_bar.html' with add_btn_text='Dodaj butelkę' %}
 {% endblock %}

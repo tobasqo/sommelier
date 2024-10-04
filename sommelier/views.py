@@ -9,7 +9,7 @@ class BottleListView(ListView):
     model = models.Bottle
     template_name = "partials/bottle_list.html"
     context_object_name = "bottles"
-    paginate_by = 25
+    paginate_by = 2
 
 
 class WineCreateView(CreateView):

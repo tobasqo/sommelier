@@ -1,7 +1,8 @@
 {% load static %}
 
-<div class="flex border border-gray-200 rounded-lg shadow max-w-40">
+<div class="flex border border-gray-200 rounded-lg shadow max-w-52">
     <a href="{% url 'bottle-detail' bottle.pk %}">
+        {# it looks in static/wines rn #}
         <img
             class="rounded-t-lg object-scale-down"
             src="{% if bottle.image %}
