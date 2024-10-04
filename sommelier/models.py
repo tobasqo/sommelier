@@ -1,8 +1,8 @@
 import os
 
-from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.utils.text import slugify
 
 
 class Kind(models.TextChoices):
@@ -70,13 +70,15 @@ class Wine(models.Model):
     def __str__(self):
         return f'[{self.producer}] {self.name} ({self.get_kind_display()}/{self.get_taste_display()})'
 
+
     class Meta:
         ordering = ['-id']
 
 
 def upload_to(instance: 'Bottle', filename: str):
     ext = os.path.splitext(filename)[1]
-    return os.path.join(settings.MEDIA_ROOT, 'wines', str(instance.year), f'{instance.wine.name}{ext}')
+    safe_base = slugify(instance.wine.name)
+    return os.path.join('wines', f'{safe_base}{ext}')
 
 
 class Bottle(models.Model):
@@ -93,6 +95,7 @@ class Bottle(models.Model):
     def __str__(self):
         return f"{self.wine} - {self.year}"
 
+
     class Meta:
         ordering = ['-id']
 
@@ -105,6 +108,7 @@ class ShopInfo(models.Model):
 
     def __str__(self):
         return f"{self.shop_name} - {self.price}"
+
 
     class Meta:
         ordering = ['-id']

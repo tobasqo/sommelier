@@ -6,7 +6,7 @@
         <img
             class="rounded-t-lg object-scale-down"
             src="{% if bottle.image %}
-                    {% static bottle.image.url %}
+                    {{ bottle.image.url }}
                 {% else %}
                     {% static 'images/default_img.svg' %}
                 {% endif %}"
