@@ -6,5 +6,24 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ object.wine.name|default:"Dodaj butelkę" }}</h1>
+    <h1>{{ object.wine.name }}</h1>
+    {% if bottle.image %}
+        <img
+            class="rounded-t-lg object-scale-down"
+            src="{{ bottle.image.url }}"
+            alt="Nie można wyświetlić zdjęcia"
+        >
+        {{ bottle.wine.get_taste_display }}
+        {{ bottle.wine.get_kind_display }}
+        {{ bottle.wine.get_country_display }}
+        {{ bottle.wine.type }}
+        {{ bottle.wine.name }}
+        {{ bottle.wine.producer }}
+        {{ bottle.year }}
+        {{ bottle.score }}
+        {{ bottle.description }}
+        {{ bottle.shop_infos.latest.shop_name }}
+        {{ bottle.shop_infos.latest.price }}
+        {{ bottle.shop_infos.latest.date }}
+    {% endif %}
 {% endblock %}

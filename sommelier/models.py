@@ -73,6 +73,7 @@ class Wine(models.Model):
 
     class Meta:
         ordering = ['-id']
+        get_latest_by = ["-id"]
 
 
 def upload_to(instance: 'Bottle', filename: str):
@@ -82,7 +83,7 @@ def upload_to(instance: 'Bottle', filename: str):
 
 
 class Bottle(models.Model):
-    wine = models.ForeignKey(Wine, on_delete=models.PROTECT)
+    wine = models.ForeignKey(Wine, related_name="bottles", on_delete=models.PROTECT)
     year = models.IntegerField(validators=[MinValueValidator(1900), MaxValueValidator(2100)])
     image = models.ImageField(upload_to=upload_to, blank=True)
     score = models.DecimalField(
@@ -98,10 +99,11 @@ class Bottle(models.Model):
 
     class Meta:
         ordering = ['-id']
+        get_latest_by = ["-id"]
 
 
 class ShopInfo(models.Model):
-    bottle = models.ForeignKey(Bottle, on_delete=models.PROTECT, related_name='shop_info')
+    bottle = models.ForeignKey(Bottle, related_name='shop_infos', on_delete=models.PROTECT)
     shop_name = models.CharField(max_length=20, choices=Shop.choices)
     price = models.DecimalField(max_digits=5, decimal_places=2)
     date = models.DateField()
@@ -112,3 +114,4 @@ class ShopInfo(models.Model):
 
     class Meta:
         ordering = ['-id']
+        get_latest_by = ["-id"]

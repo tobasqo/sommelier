@@ -1,6 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView
-from django.views.generic.edit import CreateView, UpdateView, View
+from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.detail import DetailView
 
 from sommelier import forms, models
 
@@ -33,7 +34,7 @@ class ShopInfoCreateView(CreateView):
     success_url = reverse_lazy('bottle-list')
 
 
-class BottleDetailView(View):
+class BottleDetailView(DetailView):
     model = models.Bottle
     form_class = forms.BottleForm
     template_name = 'partials/bottle_detail.html'
