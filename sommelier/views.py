@@ -20,7 +20,9 @@ class BottleListView(ListView):
     # noinspection DuplicatedCode
     def get_queryset(self):
         qs = super().get_queryset()
+        print(qs)
         params = self.request.GET
+        print(params)
 
         if taste := params.get("taste"):
             qs = qs.filter(wine__taste=taste)
@@ -28,8 +30,9 @@ class BottleListView(ListView):
             qs = qs.filter(wine__kind=kind)
         if countries := params.get("countries"):
             qs = qs.filter(wine__country__in=countries.split(','))
-        if type := params.get("type"):
-            qs = qs.filter(wine__type__icontains=type)
+        if wine_type := params.get("type"):
+            print(type(wine_type), wine_type)
+            qs = qs.filter(wine__type__icontains=wine_type)
         if name := params.get("name"):
             qs = qs.filter(wine__name__icontains=name)
         if producer := params.get("producer"):
@@ -54,6 +57,7 @@ class BottleListView(ListView):
             qs = qs.filter(shop_infos__date__gte=date_from)
         if date_to := params.get("date_to"):
             qs = qs.filter(shop_infos__date__lte=date_to)
+        print(qs)
         return qs
 
 
