@@ -14,8 +14,13 @@
     </div>
     <div>
         <button type="button" class="text-md">
-            <a href="{% url 'wine-create' %}">{{ add_btn_text }}</a>
+            <a href="{% url 'wine-create' %}">Dodaj wino</a>
         </button>
     </div>
-    {# TODO: add bottle-create #}
+    <div>
+        <button type="button" class="text-md">
+            <a href="{% url 'bottle-create' 0 %}">Dodaj butelkę</a>
+        </button>
+        
+    </div>
 </div>
