@@ -89,7 +89,7 @@ class ShopInfoForm(forms.ModelForm):
         model = models.ShopInfo
         fields = '__all__'
         widgets = {
-            'date': forms.DateInput(attrs={'type': 'date'}),  # TODO: change display format
+            'date': forms.DateInput(attrs={'type': 'date'}),
             'price': forms.NumberInput(attrs={'value': 20}),
         }
         labels = {
