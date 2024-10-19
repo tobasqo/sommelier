@@ -11,6 +11,48 @@ class BottleListView(ListView):
     template_name = "routes/bottle_list.html"
     context_object_name = "bottles"
     paginate_by = 25
+    
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['form'] = forms.BottlesFilterForm()
+        return ctx
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        params = self.request.GET
+        if (taste := params.get("taste")) is not None:
+            qs = qs.filter(wine__taste=taste)
+        if (kind := params.get("kind")) is not None:
+            qs = qs.filter(wine__kind=kind)
+        if (country := params.get("country")) is not None:
+            qs = qs.filter(wine__country=country)
+        if (type := params.get("type")) is not None:
+            qs = qs.filter(wine__type__icontains=type)
+        if (name := params.get("name")) is not None:
+            qs = qs.filter(wine__name__icontains=name)
+        if (producer := params.get("producer")) is not None:
+            qs = qs.filter(wine__producer__icontains=producer)
+        if (year_from := params.get("year_from")) is not None:
+            qs = qs.filter(year__gte=year_from)
+        if (year_to := params.get("year_to")) is not None:
+            qs = qs.filter(year__lte=year_to)
+        if (score_from := params.get("score_from")) is not None:
+            qs = qs.filter(score__gte=score_from)
+        if (score_to := params.get("score_to")) is not None:
+            qs = qs.filter(score__lte=score_to)
+        if (keywords := params.get('keywords')) is not None:
+            qs = qs.filter(description__icontains=keywords)
+        if (shops := params.get("shops")) is not None:
+            qs = qs.filter(shop_infos__shop_names__in=shops.split(','))
+        if (price_from := params.get("price_from")) is not None:
+            qs = qs.filter(shop_infos__price__gte=price_from)
+        if (price_to := params.get("price_to")) is not None:
+            qs = qs.filter(shop_infos__price__lte=price_to)
+        if (date_from := params.get("date_from")) is not None:
+            qs = qs.filter(shop_infos__date__gte=date_from)
+        if (date_to := params.get("date_to")) is not None:
+            qs = qs.filter(shop_infos__date__lte=date_to)
+        return qs
 
 
 class WineCreateView(CreateView):

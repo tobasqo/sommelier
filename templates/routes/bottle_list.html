@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
 {% block body %}
-    {# TODO: add search bar #}
+    {% include 'partials/search_bar.html' %}
+
     <div class="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mx-auto mb-16 justify-items-center">
         {% for bottle in bottles %}
             {% include 'partials/bottle_card.html' with bottle=bottle %}

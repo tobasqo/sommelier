@@ -5,6 +5,54 @@ from django import forms
 from sommelier import models
 
 
+class BottlesFilterForm(forms.Form):
+    taste = forms.ChoiceField(label='Smak', choices=models.Taste.choices, required=False)
+    kind = forms.ChoiceField(label='Kolor', choices=models.Kind.choices, required=False)
+    country = forms.ChoiceField(label='Kraj', choices=models.Country.choices, required=False)
+    type = forms.CharField(label='Szczep', max_length=models.Wine.TYPE_MAX_LENGTH, required=False)
+    name = forms.CharField(label='Nazwa', max_length=models.Wine.NAME_MAX_LENGTH, required=False)
+    producer = forms.CharField(label='Producent', max_length=models.Wine.PRODUCER_MAX_LENGTH, required=False)
+    year_from = forms.IntegerField(
+        label='Rok od',
+        min_value=models.Bottle.YEAR_MIN,
+        max_value=models.Bottle.YEAR_MAX,
+        step_size=1,
+        required=False
+    )
+    year_to = forms.IntegerField(
+        label='Rok do',
+        min_value=models.Bottle.YEAR_MIN,
+        max_value=models.Bottle.YEAR_MAX,
+        step_size=1,
+        required=False
+    )
+    score_from = forms.FloatField(
+        label='Ocena od',
+        min_value=models.Bottle.SCORE_MIN,
+        max_value=models.Bottle.SCORE_MAX,
+        step_size=0.1,
+        required=False
+    )
+    score_to = forms.FloatField(
+        label='Ocena do',
+        min_value=models.Bottle.SCORE_MIN,
+        max_value=models.Bottle.SCORE_MAX,
+        step_size=0.1,
+        required=False
+    )
+    keywords = forms.CharField(label='W opisie', max_length=255, required=False)
+    shops = forms.MultipleChoiceField(label='Sklepy', choices=models.Shop.choices, required=False)
+    price_from = forms.FloatField(label='Cena od', min_value=models.ShopInfo.PRICE_MIN, step_size=0.01, required=False)
+    price_to = forms.FloatField(label='Cena do', step_size=0.01, required=False)
+    date_from = forms.DateField(label='Data zakupu od', required=False)
+    date_to = forms.DateField(label='Data zakupu do', required=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'get'
+
+
 class WineForm(forms.ModelForm):
     class Meta:
         model = models.Wine
@@ -17,6 +65,7 @@ class WineForm(forms.ModelForm):
             'name': 'Nazwa',
             'producer': 'Producent',
         }
+
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -60,6 +109,7 @@ class BottleForm(forms.ModelForm):
             'image': 'Zdjęcie',
         }
 
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -98,6 +148,7 @@ class ShopInfoForm(forms.ModelForm):
             'price': 'Cena',
             'date': 'Data zakupu',
         }
+
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

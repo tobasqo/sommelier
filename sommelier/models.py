@@ -60,12 +60,16 @@ class Shop(models.TextChoices):
 
 
 class Wine(models.Model):
+    TYPE_MAX_LENGTH = 50
+    NAME_MAX_LENGTH = 100
+    PRODUCER_MAX_LENGTH = 100
+
     taste = models.CharField(max_length=2, choices=Taste.choices)
     kind = models.CharField(max_length=1, choices=Kind.choices)
     country = models.CharField(max_length=2, choices=Country.choices)
-    type = models.CharField(max_length=50)
-    name = models.CharField(max_length=100)
-    producer = models.CharField(max_length=100)
+    type = models.CharField(max_length=TYPE_MAX_LENGTH)
+    name = models.CharField(max_length=NAME_MAX_LENGTH)
+    producer = models.CharField(max_length=PRODUCER_MAX_LENGTH)
 
     def __str__(self):
         return f'[{self.producer}] {self.name} ({self.get_kind_display()}/{self.get_taste_display()})'
@@ -84,13 +88,18 @@ def upload_to(instance: 'Bottle', filename: str):
 
 
 class Bottle(models.Model):
+    YEAR_MIN = 1900
+    YEAR_MAX = 2100
+    SCORE_MIN = 0
+    SCORE_MAX = 10
+
     wine = models.ForeignKey(Wine, related_name="bottles", on_delete=models.PROTECT)
-    year = models.IntegerField(validators=[MinValueValidator(1900), MaxValueValidator(2100)])
+    year = models.IntegerField(validators=[MinValueValidator(YEAR_MIN), MaxValueValidator(YEAR_MAX)])
     image = models.ImageField(upload_to=upload_to, blank=True)
     score = models.DecimalField(
         max_digits=3,
         decimal_places=1,
-        validators=[MinValueValidator(0), MaxValueValidator(10)],
+        validators=[MinValueValidator(SCORE_MIN), MaxValueValidator(SCORE_MAX)],
     )
     description = models.TextField(blank=True, null=True)
 
@@ -104,9 +113,11 @@ class Bottle(models.Model):
 
 
 class ShopInfo(models.Model):
+    PRICE_MIN = 0.0
+
     bottle = models.ForeignKey(Bottle, related_name='shop_infos', on_delete=models.PROTECT)
     shop_name = models.CharField(max_length=20, choices=Shop.choices)
-    price = models.DecimalField(max_digits=5, decimal_places=2)
+    price = models.DecimalField(max_digits=5, decimal_places=2, validators=[MinValueValidator(PRICE_MIN)])
     date = models.DateField()
 
     def __str__(self):

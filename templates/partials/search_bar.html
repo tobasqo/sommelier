@@ -1,0 +1,9 @@
+{% load crispy_forms_tags %}
+
+<div>
+    <div>Filtruj</div>
+    <div>
+        {% csrf_token %}
+        {% crispy form %}
+    </div>
+</div>
