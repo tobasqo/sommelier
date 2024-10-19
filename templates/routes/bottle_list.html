@@ -2,7 +2,7 @@
 
 {% block body %}
     {# TODO: add search bar #}
-    <div class="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mx-auto">
+    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mx-auto mb-16 justify-items-center">
         {% for bottle in bottles %}
             {% include 'partials/bottle_card.html' with bottle=bottle %}
         {% empty %}
@@ -10,5 +10,5 @@
         {% endfor %}
     </div>
 
-    {% include 'partials/bottom_bar.html' with add_btn_text='Dodaj butelkę' %}
+    {% include 'partials/bottom_bar.html' %}
 {% endblock %}
