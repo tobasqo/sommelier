@@ -8,6 +8,7 @@ BLANK_OPTION = [('', 'Wybierz...')]
 
 
 class BottlesFilterForm(forms.Form):
+    # TODO: fix multiple choice select
     taste = forms.ChoiceField(label='Smak', choices=BLANK_OPTION + models.Taste.choices, required=False)
     kind = forms.ChoiceField(label='Kolor', choices=BLANK_OPTION + models.Kind.choices, required=False)
     countries = forms.MultipleChoiceField(label='Kraje', choices=models.Country.choices, required=False)
@@ -61,6 +62,7 @@ class BottlesFilterForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_method = 'get'
+        self.helper.form_id = 'filter-form'
         self.helper.layout = layout.Layout(
             layout.Div(
                 layout.Div('taste', css_class='w-[49%]'),
@@ -97,13 +99,20 @@ class BottlesFilterForm(forms.Form):
             ),
             'keywords',
             layout.Div(
+                layout.Button(
+                    'clear-params',
+                    value='Wyczyść',
+                    css_id='clear-params',
+                    css_class='rounded-md bg-amber-200 px-4 py-2 text-sm font-semibold shadow-sm hover:bg-amber-300 '
+                              'focus-visible:outline focus-visible:outline-2',
+                ),
                 layout.Submit(
                     'submit',
                     'Szukaj',
                     css_class='rounded-md bg-amber-200 px-4 py-2 text-sm font-semibold shadow-sm hover:bg-amber-300 '
                               'focus-visible:outline focus-visible:outline-2',
                 ),
-                css_class='flex justify-center mt-4',
+                css_class='flex justify-center mt-4 gap-6',
             ),
         )
 
