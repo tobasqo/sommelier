@@ -10,8 +10,11 @@
     {% block styles %}{% endblock %}
     <link rel="shortcut icon" type="image/png" href="{% static 'icons/favicon.svg' %}">
 </head>
-<body class="bg-amber-100 w-11/12 mx-auto">
-    {# TODO: add navbar for wines whisky/beers extension #}
-    {% block body %}{% endblock %}
+<body class="bg-amber-100">
+    {# TODO: add navbar for whisky/beers extension #}
+    {% include 'partials/navbar.html' %}
+    <div class="w-11/12 mx-auto">
+        {% block body %}{% endblock %}
+    </div>
 </body>
 </html>

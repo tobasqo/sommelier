@@ -1,6 +1,6 @@
 {% load static %}
 
-<div class="fixed bottom-0 z-50 w-full h-12 -translate-x-1/2 flex border-gray-200 left-1/2 bg-amber-200 justify-around items-center">
+<div class="fixed bottom-0 z-50 w-full h-12 -translate-x-1/2 flex left-1/2 bg-amber-200 justify-around items-center">
     <div>
         {% if page_obj.has_previous %}
             <a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
@@ -13,8 +13,9 @@
         {% endif %} 
     </div>
     <div>
-        <button type="button" class="text-sm">
+        <button type="button" class="text-md">
             <a href="{% url 'wine-create' %}">{{ add_btn_text }}</a>
         </button>
     </div>
+    {# TODO: add bottle-create #}
 </div>

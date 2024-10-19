@@ -76,6 +76,7 @@ class Wine(models.Model):
         get_latest_by = ["-id"]
 
 
+# TODO: add image compression
 def upload_to(instance: 'Bottle', filename: str):
     ext = os.path.splitext(filename)[1]
     safe_base = slugify(instance.wine.name)

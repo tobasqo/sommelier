@@ -1,0 +1,22 @@
+<nav class="z-50 w-full h-12 bg-amber-200">
+    <div class="px-4 py-3 mx-auto">
+        <div class="flex items-center justify-around">
+            <ul class="flex flex-row font-medium mt-0 space-x-8 text-md">
+                <li>
+                    <a href="/" class="hover:underline">Strona główna</a>
+                </li>
+                <li>
+                    <a href="{% url 'bottle-list' %}" class="hover:underline">Wino</a>
+                </li>
+                <li>
+                    {# TODO: add after making home for whisky #}
+                    <a href="#" class="hover:underline">Whisky</a>
+                </li>
+                <li>
+                    {# TODO: add after making home for piwo #}
+                    <a href="#" class="hover:underline">Piwo</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
