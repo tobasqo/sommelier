@@ -39,10 +39,12 @@ class ShopInfoCreateView(CreateView):
     model = models.ShopInfo
     form_class = forms.ShopInfoForm
     template_name = 'routes/shop_info_form.html'
-    success_url = reverse_lazy('bottle-list')
 
     def get_initial(self):
         return {'bottle': self.kwargs['bottle_pk']}
+
+    def get_success_url(self):
+        return reverse_lazy('bottle-detail', kwargs={'pk': self.object.bottle.pk})
 
 
 class BottleDetailView(DetailView):
