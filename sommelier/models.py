@@ -43,20 +43,20 @@ class Country(models.TextChoices):
 
 
 class Shop(models.TextChoices):
-    ALDI = 'Aldi'
-    AUCHAN = 'Auchan'
-    BIEDRONKA = 'Biedronka'
-    CARREFOUR = 'Carrefour'
-    DINO = 'Dino'
-    ELECLERC = 'E.Leclerc'
-    GROSZEK = 'Groszek'
-    INTERMARCHE = 'Intermarche'
-    KAUFLAND = 'Kaufland'
-    LIDL = 'Lidl'
-    SPOLEM = 'Społem'
-    STOKROTKA = 'Stokrotka'
-    ZABKA = 'Żabka'
-    OTHER = 'Inny'
+    ALDI = 'Al', 'Aldi'
+    AUCHAN = 'Au', 'Auchan'
+    BIEDRONKA = 'Bi', 'Biedronka'
+    CARREFOUR = 'Ca', 'Carrefour'
+    DINO = 'Di', 'Dino'
+    ELECLERC = 'El', 'E.Leclerc'
+    GROSZEK = 'Gr', 'Groszek'
+    INTERMARCHE = 'In', 'Intermarche'
+    KAUFLAND = 'Ka', 'Kaufland'
+    LIDL = 'Li', 'Lidl'
+    SPOLEM = 'Sp', 'Społem'
+    STOKROTKA = 'St', 'Stokrotka'
+    ZABKA = 'Za', 'Żabka'
+    OTHER = 'Ot', 'Inny'
 
 
 class Wine(models.Model):

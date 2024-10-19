@@ -1,8 +1,11 @@
 {% load crispy_forms_tags %}
 
-<div>
-    <div>Filtruj</div>
-    <div>
+<div class="border rounded-lg pb-3 mt-3 mb-6 shadow">
+    <div class="bg-amber-200 text-center py-1">
+        <span class="text-md">Filtruj</span>
+    </div>
+    <hr />
+    <div class="mt-2 px-1">
         {% csrf_token %}
         {% crispy form %}
     </div>

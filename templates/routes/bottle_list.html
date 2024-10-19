@@ -3,12 +3,16 @@
 {% block body %}
     {% include 'partials/search_bar.html' %}
 
-    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mx-auto mb-16 justify-items-center">
-        {% for bottle in bottles %}
-            {% include 'partials/bottle_card.html' with bottle=bottle %}
-        {% empty %}
-            <h3 class="text-center text-xl mx-auto my-auto">Nie dodano żadnych butelek</h3>
-        {% endfor %}
+    <div>
+        {% if bottles|length %}
+            <div class="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mx-auto mb-16 justify-items-center text-center">
+                {% for bottle in bottles %}
+                    {% include 'partials/bottle_card.html' with bottle=bottle %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <h3 class="text-xl">Brak butelek do wyświetlenia</h3>
+        {% endif %}
     </div>
 
     {% include 'partials/bottom_bar.html' %}

@@ -17,40 +17,42 @@ class BottleListView(ListView):
         ctx['form'] = forms.BottlesFilterForm()
         return ctx
 
+    # noinspection DuplicatedCode
     def get_queryset(self):
         qs = super().get_queryset()
         params = self.request.GET
-        if (taste := params.get("taste")) is not None:
+
+        if taste := params.get("taste"):
             qs = qs.filter(wine__taste=taste)
-        if (kind := params.get("kind")) is not None:
+        if kind := params.get("kind"):
             qs = qs.filter(wine__kind=kind)
-        if (country := params.get("country")) is not None:
-            qs = qs.filter(wine__country=country)
-        if (type := params.get("type")) is not None:
+        if countries := params.get("countries"):
+            qs = qs.filter(wine__country__in=countries.split(','))
+        if type := params.get("type"):
             qs = qs.filter(wine__type__icontains=type)
-        if (name := params.get("name")) is not None:
+        if name := params.get("name"):
             qs = qs.filter(wine__name__icontains=name)
-        if (producer := params.get("producer")) is not None:
+        if producer := params.get("producer"):
             qs = qs.filter(wine__producer__icontains=producer)
-        if (year_from := params.get("year_from")) is not None:
+        if year_from := params.get("year_from"):
             qs = qs.filter(year__gte=year_from)
-        if (year_to := params.get("year_to")) is not None:
+        if year_to := params.get("year_to"):
             qs = qs.filter(year__lte=year_to)
-        if (score_from := params.get("score_from")) is not None:
+        if score_from := params.get("score_from"):
             qs = qs.filter(score__gte=score_from)
-        if (score_to := params.get("score_to")) is not None:
+        if score_to := params.get("score_to"):
             qs = qs.filter(score__lte=score_to)
-        if (keywords := params.get('keywords')) is not None:
+        if keywords := params.get('keywords'):
             qs = qs.filter(description__icontains=keywords)
-        if (shops := params.get("shops")) is not None:
+        if shops := params.get("shops"):
             qs = qs.filter(shop_infos__shop_names__in=shops.split(','))
-        if (price_from := params.get("price_from")) is not None:
+        if price_from := params.get("price_from"):
             qs = qs.filter(shop_infos__price__gte=price_from)
-        if (price_to := params.get("price_to")) is not None:
+        if price_to := params.get("price_to"):
             qs = qs.filter(shop_infos__price__lte=price_to)
-        if (date_from := params.get("date_from")) is not None:
+        if date_from := params.get("date_from"):
             qs = qs.filter(shop_infos__date__gte=date_from)
-        if (date_to := params.get("date_to")) is not None:
+        if date_to := params.get("date_to"):
             qs = qs.filter(shop_infos__date__lte=date_to)
         return qs
 

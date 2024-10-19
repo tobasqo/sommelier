@@ -4,11 +4,13 @@ from django import forms
 
 from sommelier import models
 
+BLANK_OPTION = [('', 'Wybierz...')]
+
 
 class BottlesFilterForm(forms.Form):
-    taste = forms.ChoiceField(label='Smak', choices=models.Taste.choices, required=False)
-    kind = forms.ChoiceField(label='Kolor', choices=models.Kind.choices, required=False)
-    country = forms.ChoiceField(label='Kraj', choices=models.Country.choices, required=False)
+    taste = forms.ChoiceField(label='Smak', choices=BLANK_OPTION + models.Taste.choices, required=False)
+    kind = forms.ChoiceField(label='Kolor', choices=BLANK_OPTION + models.Kind.choices, required=False)
+    countries = forms.MultipleChoiceField(label='Kraje', choices=models.Country.choices, required=False)
     type = forms.CharField(label='Szczep', max_length=models.Wine.TYPE_MAX_LENGTH, required=False)
     name = forms.CharField(label='Nazwa', max_length=models.Wine.NAME_MAX_LENGTH, required=False)
     producer = forms.CharField(label='Producent', max_length=models.Wine.PRODUCER_MAX_LENGTH, required=False)
@@ -40,17 +42,70 @@ class BottlesFilterForm(forms.Form):
         step_size=0.1,
         required=False
     )
-    keywords = forms.CharField(label='W opisie', max_length=255, required=False)
+    keywords = forms.CharField(label='Słowa z opisu (oddzielone przecinkiem)', max_length=255, required=False)
     shops = forms.MultipleChoiceField(label='Sklepy', choices=models.Shop.choices, required=False)
     price_from = forms.FloatField(label='Cena od', min_value=models.ShopInfo.PRICE_MIN, step_size=0.01, required=False)
     price_to = forms.FloatField(label='Cena do', step_size=0.01, required=False)
-    date_from = forms.DateField(label='Data zakupu od', required=False)
-    date_to = forms.DateField(label='Data zakupu do', required=False)
+    date_from = forms.DateField(
+        label='Data zakupu od',
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        required=False,
+    )
+    date_to = forms.DateField(
+        label='Data zakupu do',
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        required=False,
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_method = 'get'
+        self.helper.layout = layout.Layout(
+            layout.Div(
+                layout.Div('taste', css_class='w-[49%]'),
+                layout.Div('kind', css_class='w-[49%]'),
+                css_class='flex justify-between',
+            ),
+            'type',
+            'name',
+            'producer',
+            layout.Div(
+                layout.Div('year_from', css_class='w-[49%]'),
+                layout.Div('year_to', css_class='w-[49%]'),
+                css_class='flex justify-between',
+            ),
+            layout.Div(
+                layout.Div('score_from', css_class='w-[49%]'),
+                layout.Div('score_to', css_class='w-[49%]'),
+                css_class='flex justify-between',
+            ),
+            layout.Div(
+                layout.Div('countries', css_class='w-[49%]'),
+                layout.Div('shops', css_class='w-[49%]'),
+                css_class='flex justify-between',
+            ),
+            layout.Div(
+                layout.Div('price_from', css_class='w-[49%]'),
+                layout.Div('price_to', css_class='w-[49%]'),
+                css_class='flex justify-between',
+            ),
+            layout.Div(
+                layout.Div('date_from', css_class='w-[49%]'),
+                layout.Div('date_to', css_class='w-[49%]'),
+                css_class='flex justify-between',
+            ),
+            'keywords',
+            layout.Div(
+                layout.Submit(
+                    'submit',
+                    'Szukaj',
+                    css_class='rounded-md bg-amber-200 px-4 py-2 text-sm font-semibold shadow-sm hover:bg-amber-300 '
+                              'focus-visible:outline focus-visible:outline-2',
+                ),
+                css_class='flex justify-center mt-4',
+            ),
+        )
 
 
 class WineForm(forms.ModelForm):
