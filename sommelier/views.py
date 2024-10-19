@@ -45,7 +45,7 @@ class BottleListView(ListView):
         if keywords := params.get('keywords'):
             qs = qs.filter(description__icontains=keywords)
         if shops := params.get("shops"):
-            qs = qs.filter(shop_infos__shop_names__in=shops.split(','))
+            qs = qs.filter(shop_infos__shop_name__in=shops.split(','))
         if price_from := params.get("price_from"):
             qs = qs.filter(shop_infos__price__gte=price_from)
         if price_to := params.get("price_to"):
