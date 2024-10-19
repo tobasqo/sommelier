@@ -34,7 +34,6 @@ class BottleCreateView(CreateView):
         return {'wine': self.kwargs['wine_pk']}
 
 
-# TODO: based on previous url (bottle-detail/bottle-create) change success url
 class ShopInfoCreateView(CreateView):
     model = models.ShopInfo
     form_class = forms.ShopInfoForm
