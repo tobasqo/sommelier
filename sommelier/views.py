@@ -79,5 +79,5 @@ class ShopInfoUpdateView(UpdateView):
 
     def get_initial(self):
         initial = super().get_initial()
-        initial['date'] = self.object.date  # TODO: fix
+        initial['date'] = self.object.date
         return initial

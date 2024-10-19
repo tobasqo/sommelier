@@ -101,6 +101,7 @@ class ShopInfoForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.initial['date'] = kwargs['initial']['date'].strftime('%Y-%m-%d')
         self.helper = FormHelper()
         self.helper.layout = layout.Layout(
             'bottle',
