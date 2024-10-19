@@ -1,12 +1,42 @@
 {% load crispy_forms_tags %}
 
-<div class="border rounded-lg pb-3 mt-3 mb-6 shadow">
+<div class="border rounded-lg mt-3 shadow">
     <div class="bg-amber-200 text-center py-1">
-        <span class="text-md">Filtruj</span>
+        <button class="text-md" onclick="toggleFilters()">Filtruj</button>
     </div>
-    <hr />
-    <div class="mt-2 px-1">
+    <div id="filters-form-div" class="mt-2 px-1 mb-10" hidden>
+        {# TODO: hydrate with params after submitting and re-rendering #}
         {% csrf_token %}
         {% crispy form %}
     </div>
+
+    <script>
+        const filtersFormDiv = document.getElementById("filters-form-div");
+        function toggleFilters() {
+            filtersFormDiv.hidden = !filtersFormDiv.hidden;
+        }
+        
+        const clearParamsBtn = document.getElementById('clear-params');
+        clearParamsBtn.addEventListener('click', (_) => {
+            location.href = '{% url "bottle-list" %}';
+        });
+
+        const form = document.getElementById('filter-form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const filters = new URLSearchParams();
+            formData.forEach((value, field) => {
+                if (value) {
+                    filters.set(field, value);
+                }
+            });
+            let redirectUrl = '{% url "bottle-list" %}';
+            if (filters.size) {
+                redirectUrl += '?' + filters.toString();
+            }
+            console.log(redirectUrl);
+            location.href = redirectUrl;
+        })
+    </script>
 </div>
