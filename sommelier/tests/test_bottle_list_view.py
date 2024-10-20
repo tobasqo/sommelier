@@ -150,7 +150,6 @@ class TestBottleListView(TestCase):
             [self.bottle, bottle]
         )
 
-    # TODO: fix
     def test_get_with_multiple_shops(self):
         update_purchase_info(self.purchase_info, shop_name=models.Shop.GROSZEK)
         purchase_info = create_purchase_info(self.bottle, shop_name=models.Shop.LEWIATAN)
