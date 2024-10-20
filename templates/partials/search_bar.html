@@ -27,31 +27,14 @@
             const filters = new URLSearchParams();
             formData.forEach((value, field) => {
                 if (value) {
-                    filters.set(field, value);
+                    filters.append(field, value);
                 }
             });
             let redirectUrl = '{% url "bottle-list" %}';
             if (filters.size) {
                 redirectUrl += '?' + filters.toString();
-            }
-            console.log(redirectUrl);
+             }
             location.href = redirectUrl;
         });
-
-        function hydrateFiltersForm() {
-            const paramsString = location.href.split('?');
-            if (paramsString.length !== 2) return;
-
-            const filters = new URLSearchParams(paramsString[1]);
-            filters.forEach((value, field, _) => {
-                const input = form.elements.namedItem(field);
-                console.log(input);
-                input.value = value;
-            });
-        }
-
-        window.onload = function () {
-            hydrateFiltersForm();
-        };
     </script>
 </div>

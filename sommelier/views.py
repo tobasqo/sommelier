@@ -14,20 +14,22 @@ class BottleListView(ListView):
     
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx['form'] = forms.BottlesFilterForm()
+        ctx['form'] = forms.BottlesFilterForm(self.request.GET or None)
         return ctx
 
     # noinspection DuplicatedCode
     def get_queryset(self):
         qs = self.model.objects.all()
         params = self.request.GET
+        print(params)
 
         if taste := params.get("taste"):
             qs = qs.filter(wine__taste=taste)
         if kind := params.get("kind"):
             qs = qs.filter(wine__kind=kind)
-        if countries := params.get("countries"):
-            qs = qs.filter(wine__country__in=countries.split(','))
+        if countries := params.getlist("countries"):
+            print(countries)
+            qs = qs.filter(wine__country__in=countries)
         if wine_type := params.get("type"):
             print(type(wine_type), wine_type)
             qs = qs.filter(wine__type=wine_type)
@@ -45,8 +47,8 @@ class BottleListView(ListView):
             qs = qs.filter(score__lte=score_to)
         if keywords := params.get('keywords'):
             qs = qs.filter(description__icontains=keywords)
-        if shops := params.get("shops"):
-            qs = qs.filter(purchases__shop_name__in=shops.split(','))
+        if shops := params.getlist("shops"):
+            qs = qs.filter(purchases__shop_name__in=shops)
         if price_from := params.get("price_from"):
             qs = qs.filter(purchases__price__gte=price_from)
         if price_to := params.get("price_to"):
