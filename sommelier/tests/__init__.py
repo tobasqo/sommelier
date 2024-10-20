@@ -90,13 +90,15 @@ def create_purchase_info(
     *,
     shop_name: models.Shop = models.Shop.GROSZEK,
     price: float = 30.0,
-    date: dt.datetime = dt.datetime.now().date,
+    date: dt.date | None = None
 ):
+    if date is None:
+        date = dt.datetime.now().date()
     return models.PurchaseInfo.objects.create(
         bottle=bottle,
         shop_name=shop_name,
         price=price,
-        date=date,
+        date=date.isoformat(),
     )
 
 
@@ -105,12 +107,12 @@ def update_purchase_info(
     *,
     shop_name: models.Shop | None = None,
     price: float | None = None,
-    date: dt.datetime | None = None,
+    date: dt.date | None = None,
 ):
     if shop_name is not None:
         purchase_info.shop_name = shop_name
     if price is not None:
         purchase_info.price = price
     if date is not None:
-        purchase_info.date = date
+        purchase_info.date = date.isoformat()
     purchase_info.save()
