@@ -11,10 +11,10 @@ class WineAdmin(admin.ModelAdmin):
 
 @admin.register(models.Bottle)
 class BottleAdmin(admin.ModelAdmin):
-    # TODO: add inline shop infos
+    # TODO: add inline purchase infos
     pass
 
 
-@admin.register(models.ShopInfo)
-class ShopInfoAdmin(admin.ModelAdmin):
+@admin.register(models.PurchaseInfo)
+class PurchaseInfoAdmin(admin.ModelAdmin):
     pass

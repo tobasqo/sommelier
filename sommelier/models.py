@@ -47,14 +47,19 @@ class Shop(models.TextChoices):
     AUCHAN = 'Au', 'Auchan'
     BIEDRONKA = 'Bi', 'Biedronka'
     CARREFOUR = 'Ca', 'Carrefour'
+    DELIKATESY_CENTRUM = 'DC', 'Delikatesy Centrum'
     DINO = 'Di', 'Dino'
     ELECLERC = 'El', 'E.Leclerc'
     GROSZEK = 'Gr', 'Groszek'
     INTERMARCHE = 'In', 'Intermarche'
     KAUFLAND = 'Ka', 'Kaufland'
+    LEWIATAN = 'Le', 'Lewiatan'
     LIDL = 'Li', 'Lidl'
+    MAKRO = 'Ma', 'Makro'
+    SELGROS = 'Se', 'Selgros'
     SPOLEM = 'Sp', 'Społem'
     STOKROTKA = 'St', 'Stokrotka'
+    TOP_MARKET = 'TM', 'Top Market'
     ZABKA = 'Za', 'Żabka'
     OTHER = 'Ot', 'Inny'
 
@@ -112,10 +117,10 @@ class Bottle(models.Model):
         get_latest_by = ["-id"]
 
 
-class ShopInfo(models.Model):
+class PurchaseInfo(models.Model):
     PRICE_MIN = 0.0
 
-    bottle = models.ForeignKey(Bottle, related_name='shop_infos', on_delete=models.PROTECT)
+    bottle = models.ForeignKey(Bottle, related_name='purchases', on_delete=models.PROTECT)
     shop_name = models.CharField(max_length=20, choices=Shop.choices)
     price = models.DecimalField(max_digits=5, decimal_places=2, validators=[MinValueValidator(PRICE_MIN)])
     date = models.DateField()

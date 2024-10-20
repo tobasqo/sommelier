@@ -48,15 +48,15 @@ class BottleListView(ListView):
         if keywords := params.get('keywords'):
             qs = qs.filter(description__icontains=keywords)
         if shops := params.get("shops"):
-            qs = qs.filter(shop_infos__shop_name__in=shops.split(','))
+            qs = qs.filter(purchases__shop_name__in=shops.split(','))
         if price_from := params.get("price_from"):
-            qs = qs.filter(shop_infos__price__gte=price_from)
+            qs = qs.filter(purchases__price__gte=price_from)
         if price_to := params.get("price_to"):
-            qs = qs.filter(shop_infos__price__lte=price_to)
+            qs = qs.filter(purchases__price__lte=price_to)
         if date_from := params.get("date_from"):
-            qs = qs.filter(shop_infos__date__gte=date_from)
+            qs = qs.filter(purchases__date__gte=date_from)
         if date_to := params.get("date_to"):
-            qs = qs.filter(shop_infos__date__lte=date_to)
+            qs = qs.filter(purchases__date__lte=date_to)
         print(qs)
         return qs
 
@@ -76,16 +76,16 @@ class BottleCreateView(CreateView):
     template_name = 'routes/bottle_form.html'
 
     def get_success_url(self):
-        return reverse_lazy('shop-info-create', kwargs={'bottle_pk': self.object.pk})
+        return reverse_lazy('purchase-info-create', kwargs={'bottle_pk': self.object.pk})
 
     def get_initial(self):
         return {'wine': self.kwargs['wine_pk']}
 
 
-class ShopInfoCreateView(CreateView):
-    model = models.ShopInfo
-    form_class = forms.ShopInfoForm
-    template_name = 'routes/shop_info_form.html'
+class PurchaseInfoCreateView(CreateView):
+    model = models.PurchaseInfo
+    form_class = forms.PurchaseInfoForm
+    template_name = 'routes/purchase_info_form.html'
 
     def get_initial(self):
         return {'bottle': self.kwargs['bottle_pk']}
@@ -118,10 +118,10 @@ class BottleUpdateView(UpdateView):
         return reverse_lazy('bottle-detail', kwargs={'pk': self.object.pk})
 
 
-class ShopInfoUpdateView(UpdateView):
-    model = models.ShopInfo
-    form_class = forms.ShopInfoForm
-    template_name = 'routes/shop_info_form.html'
+class PurchaseInfoUpdateView(UpdateView):
+    model = models.PurchaseInfo
+    form_class = forms.PurchaseInfoForm
+    template_name = 'routes/purchase_info_form.html'
 
     def get_success_url(self):
         return reverse_lazy('bottle-detail', kwargs={'pk': self.object.bottle.pk})

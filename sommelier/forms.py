@@ -43,9 +43,9 @@ class BottlesFilterForm(forms.Form):
         step_size=0.1,
         required=False
     )
-    keywords = forms.CharField(label='Słowa z opisu (oddzielone przecinkiem)', max_length=255, required=False)
+    keywords = forms.CharField(label='Szukaj w opisie', max_length=255, required=False)
     shops = forms.MultipleChoiceField(label='Sklepy', choices=models.Shop.choices, required=False)
-    price_from = forms.FloatField(label='Cena od', min_value=models.ShopInfo.PRICE_MIN, step_size=0.01, required=False)
+    price_from = forms.FloatField(label='Cena od', min_value=models.PurchaseInfo.PRICE_MIN, step_size=0.01, required=False)
     price_to = forms.FloatField(label='Cena do', step_size=0.01, required=False)
     date_from = forms.DateField(
         label='Data zakupu od',
@@ -198,9 +198,9 @@ class BottleForm(forms.ModelForm):
         )
 
 
-class ShopInfoForm(forms.ModelForm):
+class PurchaseInfoForm(forms.ModelForm):
     class Meta:
-        model = models.ShopInfo
+        model = models.PurchaseInfo
         fields = '__all__'
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),

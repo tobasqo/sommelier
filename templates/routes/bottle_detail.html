@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="justify-center my-6">
+    <div class="justify-center my-4">
         {% if bottle.image %}
             <img
                     class="rounded-lg object-scale-down mx-auto"
@@ -15,7 +15,7 @@
             >
         {% endif %}
 
-        <div class="mb-3 mt-5 rounded-xl border py-3 px-5 shadow space-y-1 bg-amber-50">
+        <div class="mb-3 mt-4 rounded-xl border py-3 px-5 shadow space-y-1 bg-amber-50">
             <div class="flex justify-between items-center pb-1">
                 <h2 class="font-bold text-xl">Wino</h2>
                 <a href="{% url 'wine-update' bottle.wine.pk bottle.pk %}">
@@ -103,7 +103,7 @@
         <div class="my-3 rounded-xl border py-3 px-5 shadow space-y-1 bg-amber-50">
             <div class="flex justify-between items-center pb-1">
                 <h2 class="text-center font-bold text-xl">Informacje o zakupie</h2>
-                <a href="{% url 'shop-info-create' bottle.pk %}">
+                <a href="{% url 'purchase-info-create' bottle.pk %}">
                     <div class="max-w-fit border p-1.5 rounded-lg bg-amber-200">
                         <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -118,25 +118,25 @@
                 </a>
             </div>
         
-            {% for shop_info in bottle.shop_infos.all %}
+            {% for purchase_info in bottle.purchases.all %}
                 <hr class="py-1">
                 <div class="flex items-end justify-between">
                     <div>
                         <p>
                             <span class="font-bold">Nazwa sklepu:</span>
-                            {{ shop_info.shop_name }}
+                            {{ purchase_info.shop_name }}
                         </p>
                         <p>
                             <span class="font-bold">Cena:</span>
-                            {{ shop_info.price }} zł
+                            {{ purchase_info.price }} zł
                         </p>
                         <p>
                             <span class="font-bold">Data zakupu:</span>
-                            {{ shop_info.date|date:"d/m/Y" }}
+                            {{ purchase_info.date|date:"d/m/Y" }}
                         </p>
                     </div>
 
-                    <a href="{% url 'shop-info-update' shop_info.pk %}">
+                    <a href="{% url 'purchase-info-update' purchase_info.pk %}">
                         <div class="max-w-fit border p-1.5 rounded-lg bg-amber-200">
                             <svg
                                     xmlns="http://www.w3.org/2000/svg"

@@ -9,6 +9,6 @@ urlpatterns = [
     path('bottles/<int:wine_pk>/add', views.BottleCreateView.as_view(), name='bottle-create'),
     path('bottles/<int:pk>', views.BottleDetailView.as_view(), name='bottle-detail'),
     path('bottles/<int:pk>/update', views.BottleUpdateView.as_view(), name='bottle-update'),
-    path('shop-infos/<int:bottle_pk>/add', views.ShopInfoCreateView.as_view(), name='shop-info-create'),
-    path('shop-infos/<int:pk>/update', views.ShopInfoUpdateView.as_view(), name='shop-info-update'),
+    path('purchases/<int:bottle_pk>/add', views.PurchaseInfoCreateView.as_view(), name='purchase-info-create'),
+    path('purchases/<int:pk>/update', views.PurchaseInfoUpdateView.as_view(), name='purchase-info-update'),
 ]
